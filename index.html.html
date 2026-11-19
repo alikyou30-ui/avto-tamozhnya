@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Авто Таможня Узбекистан</title>
+<meta name="theme-color" content="#0b5fff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Авто Таможня">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b5fff'/%3E%3Ctext x='50' y='65' font-size='48' text-anchor='middle' fill='white' font-family='Arial'%3E%F0%9F%9A%97%3C/text%3E%3C/svg%3E">
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--text:#101828;--muted:#667085;--line:#e4e7ec;--blue:#0b5fff;--green:#0a7d43;--red:#b42318;--warn:#b54708;--shadow:0 8px 24px rgba(16,24,40,.08)}
+[data-theme=dark]{--bg:#0b1220;--card:#121a2b;--text:#eef2f7;--muted:#9aa5b5;--line:#26324a;--blue:#4d8dff;--green:#37b26b;--red:#ff6b5e;--warn:#ffb020;--shadow:0 8px 24px rgba(0,0,0,.35)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.45 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;padding-bottom:32px}
+.wrap{max-width:520px;margin:0 auto;padding:16px}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+h1{font-size:20px;margin:0}
+h2{font-size:18px;margin:18px 0 8px}
+h3{font-size:16px;margin:14px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
+.btn{display:block;width:100%;border:0;border-radius:14px;padding:16px;font-size:17px;font-weight:700;background:var(--blue);color:#fff;margin:10px 0;cursor:pointer}
+.btn.secondary{background:transparent;color:var(--blue);border:2px solid var(--blue)}
+.btn.small{padding:11px;font-size:15px;border-radius:12px}
+.btn:disabled{opacity:.45}
+label{display:block;font-weight:600;margin:12px 0 6px;font-size:15px}
+input,select,textarea{width:100%;padding:13px;border:1.5px solid var(--line);border-radius:12px;font-size:16px;background:var(--card);color:var(--text)}
+input:focus,select:focus{outline:none;border-color:var(--blue)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hint{color:var(--muted);font-size:13px;margin-top:5px}
+.note{border-left:4px solid var(--warn);background:rgba(181,71,8,.08);padding:10px 12px;border-radius:10px;font-size:14px;margin:10px 0}
+.ok{border-left-color:var(--green);background:rgba(10,125,67,.08)}
+.bad{border-left-color:var(--red);background:rgba(180,35,24,.08)}
+.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:8px 0 16px}
+.progress i{display:block;height:100%;background:var(--blue);width:0;transition:.25s}
+.hidden{display:none!important}
+.total{font-size:32px;font-weight:800;color:var(--blue);word-break:break-word}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td,th{padding:9px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600}
+.chip{display:inline-block;background:rgba(11,95,255,.10);color:var(--blue);border-radius:999px;padding:5px 10px;font-size:13px;font-weight:700;margin:2px 4px 2px 0}
+ul{margin:8px 0;padding-left:20px}
+li{margin:6px 0}
+footer{color:var(--muted);font-size:12px;text-align:center;margin-top:18px;line-height:1.5}
+.lang{display:flex;gap:6px}
+.lang button{border:1.5px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;padding:7px 11px;font-weight:700}
+.lang button.active{border-color:var(--blue);color:var(--blue)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<h1 id="appTitle">🚗 Авто Таможня Узбекистан</h1>
+<div class="lang"><button id="ruBtn" class="active">RU</button><button id="uzBtn">UZ</button><button id="themeBtn" title="Тема">🌙</button></div>
+</header>
+
+<div id="home">
+<div class="card">
+<p id="intro">Предварительный расчёт платежей и документов при ввозе автомобиля в Республику Узбекистан.</p>
+<button class="btn" onclick="startCalc()">Рассчитать автомобиль</button>
+<button class="btn secondary" onclick="showDocs()">Что нужно для оформления</button>
+<button class="btn secondary" onclick="showSaved()">Мои сохранённые расчёты</button>
+</div>
+<div class="note" id="disclaimer">Приложение даёт предварительный расчёт и чек-лист. Окончательная сумма, код ТН ВЭД, льготы и требования определяются Государственным таможенным комитетом Республики Узбекистан при декларировании.</div>
+<div class="card"><h3 id="importantTitle">Важно</h3><p id="importantText">Калькулятор использует ставки, которые вы можете проверить и изменить перед расчётом. Для точного результата нужны код ТН ВЭД, документы на автомобиль и решение таможенного органа.</p></div>
+</div>
+
+<div id="calc" class="hidden">
+<div class="progress"><i id="bar"></i></div>
+<div class="card" id="stepCard"></div>
+<div class="row"><button class="btn secondary" id="backBtn" onclick="prevStep()">Назад</button><button class="btn" id="nextBtn" onclick="nextStep()">Далее</button></div>
+</div>
+
+<div id="result" class="hidden"></div>
+<div id="docsScreen" class="hidden"></div>
+<div id="savedScreen" class="hidden"></div>
+
+<footer>
+Источники для проверки: customs.uz · lex.uz · gov.uz<br>
+Дата последней проверки ставок: <span id="checkDate"></span><br>
+Приложение не является официальным сервисом ГТК Узбекистана.
+</footer>
+</div>
+
+<script>
+const T={
+ru:{app:"🚗 Авто Таможня Узбекистан",intro:"Предварительный расчёт платежей и документов при ввозе автомобиля в Республику Узбекистан.",calc:"Рассчитать автомобиль",docs:"Что нужно для оформления",saved:"Мои сохранённые расчёты",next:"Далее",back:"Назад",result:"Результат",total:"Итого к оплате",details:"Показать подробный расчёт",hide:"Скрыть подробный расчёт",save:"Сохранить расчёт",copy:"Скопировать расчёт",restart:"Начать заново",hs:"Предполагаемый код ТН ВЭД",risk:"Возможные риски и что уточнить",check:"Проверка перед визитом в таможню",noData:"Недостаточно данных для точного расчёта",editRates:"Проверьте и при необходимости измените ставки",customsValue:"Таможенная стоимость",duty:"Ввозная таможенная пошлина",excise:"Акцизный налог",vat:"НДС",recycle:"Утилизационный сбор",fee:"Таможенный сбор",other:"Иные платежи",base:"База расчёта",rate:"Ставка",amount:"Сумма",sum:"сум",docsTitle:"Документы для оформления",steps:"Что делать дальше",empty:"Пока нет сохранённых расчётов",delete:"Удалить",open:"Открыть"},
+uz:{app:"🚗 Avto Bojxona Oʻzbekiston",intro:"Oʻzbekiston Respublikasiga avtomobil keltirish boʻyicha toʻlovlar va hujjatlar boʻyicha dastlabki hisob-kitob.",calc:"Avtomobilni hisoblash",docs:"Rasmiylashtirish uchun nima kerak",saved:"Saqlangan hisob-kitoblarim",next:"Keyingi",back:"Orqaga",result:"Natija",total:"Jami toʻlanadigan summa",details:"Batafsil hisob-kitobni koʻrsatish",hide:"Batafsil hisob-kitobni yashirish",save:"Hisob-kitobni saqlash",copy:"Hisob-kitobni nusxalash",restart:"Qaytadan boshlash",hs:"Taxminiy TN VED kodi",risk:"Ehtimoliy xavflar va aniqlash kerak boʻlgan masalalar",check:"Bojxonaga borishdan oldin tekshirish",noData:"Aniq hisob uchun maʼlumot yetarli emas",editRates:"Stavkalarni tekshiring va kerak boʻlsa oʻzgartiring",customsValue:"Bojxona qiymati",duty:"Import bojxona bojı",excise:"Aksiz soligʻi",vat:"QQS",recycle:"Utilizatsiya toʻlovi",fee:"Bojxona yigʻimi",other:"Boshqa toʻlovlar",base:"Hisob bazasi",rate:"Stavka",amount:"Summa",sum:"soʻm",docsTitle:"Rasmiylashtirish uchun hujjatlar",steps:"Keyingi qadamlar",empty:"Hozircha saqlangan hisob-kitob yoʻq",delete:"Oʻchirish",open:"Ochish"}
+};
+let lang="ru",step=0,showDetails=false;
+const d={};
+const $=id=>document.getElementById(id);
+const t=k=>T[lang][k]||k;
+const fmt=n=>isFinite(n)?new Intl.NumberFormat(lang==="ru"?"ru-RU":"uz-UZ",{maximumFractionDigits:2}).format(n):"—";
+const rate=(id,label,def,base,note)=>({id,label,def,base,note});
+
+const steps=[
+ {title:{ru:"Автомобиль",uz:"Avtomobil"},fields:[
+  {k:"make",type:"text",label:{ru:"Марка автомобиля",uz:"Avtomobil brendi"},ph:"Toyota",hint:{ru:"Например: Toyota, Hyundai, Chevrolet",uz:"Masalan: Toyota, Hyundai, Chevrolet"}},
+  {k:"model",type:"text",label:{ru:"Модель",uz:"Model"},ph:"Camry"},
+  {k:"year",type:"number",label:{ru:"Год выпуска",uz:"Ishlab chiqarilgan yil"},ph:"2021"},
+  {k:"vtype",type:"select",label:{ru:"Тип автомобиля",uz:"Avtomobil turi"},opts:{ru:["Легковой","Внедорожник / SUV","Микроавтобус","Грузовой","Мотоцикл","Электромобиль"],uz:["Yengil avtomobil","Yoʻl tanlanguvchi / SUV","Mikroavtobus","Yuk avtomobili","Mototsikl","Elektromobil"]},vals:["passenger","suv","minibus","truck","motorcycle","ev"]},
+  {k:"condition",type:"select",label:{ru:"Состояние",uz:"Holati"},opts:{ru:["Новый","Б/у"],uz:["Yangi","Ishlatilgan"]},vals:["new","used"]},
+  {k:"from",type:"text",label:{ru:"Страна ввоза",uz:"Keltirilgan davlat"},ph:{ru:"Например: Корея",uz:"Masalan: Koreya"}},
+  {k:"origin",type:"text",label:{ru:"Страна происхождения",uz:"Kelib chiqish davlati"},ph:{ru:"Например: Япония",uz:"Masalan: Yaponiya"}}
+ ]},
+ {title:{ru:"Технические данные",uz:"Texnik maʼlumotlar"},fields:[
+  {k:"engine",type:"number",label:{ru:"Объём двигателя, см³",uz:"Dvigatel hajmi, sm³"},ph:"2500",hint:{ru:"Обычно указан в ПТС, свидетельстве или на двигателе",uz:"Odatda texnik pasportda yoki dvigatelda koʻrsatiladi"}},
+  {k:"power",type:"number",label:{ru:"Мощность, л.с.",uz:"Quvvati, ot kuchi"},ph:"200",hint:{ru:"1 кВт ≈ 1,36 л.с.",uz:"1 kVt ≈ 1,36 ot kuchi"}},
+  {k:"fuel",type:"select",label:{ru:"Тип топлива",uz:"Yoqilgʻi turi"},opts:{ru:["Бензин","Дизель","Гибрид","Plug-in гибрид","Электромобиль","Газ / бензин"],uz:["Benzin","Dizel","Gibrid","Plug-in gibrid","Elektromobil","Gaz / benzin"]},vals:["petrol","diesel","hybrid","phev","ev","lpg"]},
+  {k:"seats",type:"number",label:{ru:"Количество мест",uz:"Oʻrindiqlar soni"},ph:"5"},
+  {k:"body",type:"select",label:{ru:"Тип кузова",uz:"Kuzov turi"},opts:{ru:["Седан","Хэтчбек","Кроссовер","Внедорожник","Пикап","Фургон","Другое"],uz:["Sedan","Hetbek","Krossover","Yoʻl tanlanguvchi","Pikap","Furgon","Boshqa"]},vals:["sedan","hatchback","crossover","suv","pickup","van","other"]},
+  {k:"mileage",type:"number",label:{ru:"Пробег, км (если б/у)",uz:"Yurish, km (ishlatilgan boʻlsa)"},ph:"45000"},
+  {k:"vin",type:"text",label:{ru:"VIN (необязательно)",uz:"VIN (majburiy emas)"},ph:"JTD...",hint:{ru:"Остаётся только на вашем устройстве",uz:"Faqat qurilmangizda saqlanadi"}}
+ ]},
+ {title:{ru:"Стоимость и расходы",uz:"Qiymat va xarajatlar"},fields:[
+  {k:"price",type:"number",label:{ru:"Цена автомобиля",uz:"Avtomobil narxi"},ph:"22000"},
+  {k:"currency",type:"select",label:{ru:"Валюта",uz:"Valyuta"},opts:["USD","EUR","CNY","KRW","RUB","UZS"],vals:["USD","EUR","CNY","KRW","RUB","UZS"]},
+  {k:"fx",type:"number",label:{ru:"Курс: 1 единица валюты в сумах",uz:"Kurs: 1 valyuta birligi = soʻm"},ph:"12800",hint:{ru:"Проверьте актуальный курс перед расчётом",uz:"Hisobdan oldin amaldagi kursni tekshiring"}},
+  {k:"delivery",type:"number",label:{ru:"Доставка до границы, в валюте",uz:"Chegarracha yetkazish, valyutada"},ph:"1500"},
+  {k:"insurance",type:"number",label:{ru:"Страховка, в валюте",uz:"Sugʻurta, valyutada"},ph:"0"},
+  {k:"agent",type:"number",label:{ru:"Комиссия посредника, в валюте",uz:"Vositachi komissiyasi, valyutada"},ph:"0"},
+  {k:"includeExtra",type:"select",label:{ru:"Включить доп. расходы в таможенную стоимость?",uz:"Qoʻshimcha xarajatlarni bojxona qiymatiga kiritasizmi?"},opts:{ru:["Да","Нет"],uz:["Ha","Yoʻq"]},vals:["yes","no"]}
+ ]},
+ {title:{ru:"Кто ввозит автомобиль",uz:"Avtomobilni kim keltiradi"},fields:[
+  {k:"importer",type:"select",label:{ru:"Кто ввозит",uz:"Kim keltiradi"},opts:{ru:["Физическое лицо","Юридическое лицо / ИП"],uz:["Jismoniy shaxs","Yuridik shaxs / YaTT"]},vals:["individual","company"]},
+  {k:"purpose",type:"select",label:{ru:"Цель ввоза",uz:"Keltirish maqsadi"},opts:{ru:["Личное пользование","Перепродажа / коммерческие цели"],uz:["Shaxsiy foydalanish","Qayta sotish / tijorat maqsadi"]},vals:["personal","commercial"]},
+  {k:"benefit",type:"select",label:{ru:"Есть ли льгота?",uz:"Imtiyoz bormi?"},opts:{ru:["Нет","Инвалидность","Дипломатический статус","Переселение","Наследство","Временный ввоз","Другая"],uz:["Yoʻq","Nogironlik","Diplomatik maqom","Koʻchish","Meros","Vaqtinchalik keltirish","Boshqa"]},vals:["none","disability","diplomatic","relocation","inheritance","temporary","other"]}
+ ]},
+ {title:{ru:"Ставки платежей",uz:"Toʻlov stavkalari"},fields:[
+  {k:"dutyRate",type:"number",label:{ru:"Ставка ввозной пошлины, %",uz:"Import bojxona bojı stavkasi, %"},ph:"0",hint:{ru:"Зависит от кода ТН ВЭД, типа и возраста автомобиля",uz:"TN VED kodi, avtomobil turi va yoshiga bogʻliq"}},
+  {k:"exciseRate",type:"number",label:{ru:"Ставка акциза, % от базы",uz:"Aksiz stavkasi, %"},ph:"0"},
+  {k:"vatRate",type:"number",label:{ru:"Ставка НДС, %",uz:"QQS stavkasi, %"},ph:"12"},
+  {k:"recycleAmount",type:"number",label:{ru:"Утилизационный сбор, сум",uz:"Utilizatsiya toʻlovi, soʻm"},ph:"0"},
+  {k:"customsFee",type:"number",label:{ru:"Таможенный сбор, сум",uz:"Bojxona yigʻimi, soʻm"},ph:"0"},
+  {k:"otherAmount",type:"number",label:{ru:"Иные обязательные платежи, сум",uz:"Boshqa majburiy toʻlovlar, soʻm"},ph:"0"}
+ ]},
+ {title:{ru:"Проверка и результат",uz:"Tekshirish va natija"},fields:[
+  {k:"hsCode",type:"text",label:{ru:"Код ТН ВЭД",uz:"TN VED kodi"},ph:"8703...",hint:{ru:"Проверьте у таможенного органа или брокера",uz:"Bojxona organi yoki broker bilan tekshiring"}},
+  {k:"notes",type:"textarea",label:{ru:"Комментарий",uz:"Izoh"},ph:{ru:"Например: гибрид, 5 мест, доставка включена",uz:"Masalan: gibrid, 5 oʻrin, yetkazish kiritilgan"}}
+ ]}
+];
+
+function setLang(l){lang=l;$("ruBtn").classList.toggle("active",l==="ru");$("uzBtn").classList.toggle("active",l==="uz");$("appTitle").textContent=t("app");$("intro").textContent=t("intro");document.querySelectorAll("#home .btn")[0].textContent=t("calc");document.querySelectorAll("#home .btn")[1].textContent=t("docs");document.querySelectorAll("#home .btn")[2].textContent=t("saved");$("disclaimer").textContent=lang==="ru"?"Приложение даёт предварительный расчёт и чек-лист. Окончательная сумма, код ТН ВЭД, льготы и требования определяются Государственным таможенным комитетом Республики Узбекистан при декларировании.":"Ilova dastlabki hisob-kitob va hujjatlar roʻyxatini beradi. Yakuniy summa, TN VED kodi, imtiyozlar va talablar deklaratsiya qilishda Oʻzbekiston Respublikasi Davlat bojxona qoʻmitasi tomonidan belgilanadi.";renderStep();renderDocs();renderSaved();localStorage.setItem("uzAutoLang",l)}
+$("ruBtn").onclick=()=>setLang("ru");$("uzBtn").onclick=()=>setLang("uz");
+$("themeBtn").onclick=()=>{const dark=document.documentElement.dataset.theme==="dark";document.documentElement.dataset.theme=dark?"":"dark";$("themeBtn").textContent=dark?"🌙":"☀️";localStorage.setItem("uzAutoTheme",dark?"light":"dark")};
+if(localStorage.getItem("uzAutoTheme")==="dark"){document.documentElement.dataset.theme="dark";$("themeBtn").textContent="☀️"}
+if(localStorage.getItem("uzAutoLang")==="uz")setLang("uz");
+$("checkDate").textContent=new Date().toLocaleDateString(lang==="ru"?"ru-RU":"uz-UZ");
+
+function startCalc(){step=0;Object.keys(d).forEach(k=>delete d[k]);loadDraft();$("home").classList.add("hidden");$("result").classList.add("hidden");$("calc").classList.remove("hidden");renderStep()}
+function showDocs(){$("home").classList.add("hidden");$("docsScreen").classList.remove("hidden");renderDocs()}
+function showSaved(){$("home").classList.add("hidden");$("savedScreen").classList.remove("hidden");renderSaved()}
+function goHome(){["calc","result","docsScreen","savedScreen"].forEach(i=>$(i).classList.add("hidden"));$("home").classList.remove("hidden")}
+
+function loadDraft(){try{const s=JSON.parse(localStorage.getItem("uzAutoDraft")||"{}");Object.assign(d,s)}catch(e){}}
+function saveDraft(){localStorage.setItem("uzAutoDraft",JSON.stringify(d))}
+
+function guessHS(){
+ const v=d.vtype||"passenger",fuel=d.fuel||"petrol";
+ if(v==="ev"||fuel==="ev")return{code:"8703.80",why:{ru:"Электромобиль относится к группе 8703 как моторное транспортное средство; точный код зависит от характеристик и назначения.",uz:"Elektromobil 8703 guruhiga kiradi; aniq kod xususiyatlar va maqsadga bogʻliq."},alts:["8703.80","8704","8702"]};
+ if(v==="truck")return{code:"8704",why:{ru:"Грузовые автомобили обычно классифицируются в группе 8704; код зависит от типа двигателя и массы.",uz:"Yuk avtomobillari odatda 8704 guruhiga kiradi; kod dvigatel va massaga bogʻliq."},alts:["8704","8703","8702"]};
+ if(v==="minibus")return{code:"8702",why:{ru:"Микроавтобусы на 10 и более мест обычно относятся к группе 8702.",uz:"10 va undan koʻp oʻrinli mikroavtobuslar odatda 8702 guruhiga kiradi."},alts:["8702","8703","8704"]};
+ if(v==="motorcycle")return{code:"8711",why:{ru:"Мотоциклы с двигателем обычно относятся к группе 8711.",uz:"Dvigatelli mototsikllar odatda 8711 guruhiga kiradi."},alts:["8711","8703"]};
+ return{code:"8703",why:{ru:"Легковые автомобили и кроссоверы обычно начинаются с группы 8703. Точный подпункт зависит от объёма, типа двигателя, возраста и количества мест.",uz:"Yengil avtomobillar va krossoverlar odatda 8703 guruhidan boshlanadi. Aniq kichik punkt hajm, dvigatel turi, yosh va oʻrindiqlar soniga bogʻliq."},alts:["8703","8703.80","8704"]}
+}
+
+function renderStep(){
+ const s=steps[step];$("bar").style.width=((step)/(steps.length-1)*100)+"%";
+ let h=`<h2>${step+1}/6. ${s.title[lang]}</h2>`;
+ s.fields.forEach(f=>{
+  const val=d[f.k]??"";const lab=typeof f.label==="object"?f.label[lang]:f.label;
+  h+=`<label>${lab}</label>`;
+  if(f.type==="select"){const opts=typeof f.opts==="object"?f.opts[lang]:f.opts;h+=`<select data-k="${f.k}"><option value="">—</option>`+opts.map((o,i)=>`<option value="${f.vals[i]}" ${String(val)===f.vals[i]?"selected":""}>${o}</option>`).join("")+"</select>"}
+  else if(f.type==="textarea")h+=`<textarea data-k="${f.k}" rows="2" placeholder="${f.ph?.[lang]||f.ph||""}">${val}</textarea>`;
+  else h+=`<input data-k="${f.k}" type="${f.type}" value="${val}" placeholder="${f.ph?.[lang]||f.ph||""}">`;
+  if(f.hint)h+=`<div class="hint">${f.hint[lang]}</div>`;
+ });
+ if(step===0){const g=guessHS();h+=`<div class="note ok"><b>${t("hs")}:</b> ${g.code}<br>${g.why[lang]}<br><span class="chip">${g.alts.join("</span><span class='chip'>")}</span></div>`}
+ if(step===2&&d.includeExtra==="no")h+=`<div class="note">${lang==="ru"?"Таможенный орган может включить транспортные и страховые расходы в таможенную стоимость в зависимости от условий поставки и документов.":"Bojxona organi yetkazib berish shartlari va hujjatlarga qarab transport hamda sugʻurta xarajatlarini bojxona qiymatiga kiritishi mumkin."}</div>`;
+ if(step===3&&d.benefit&&d.benefit!=="none")h+=`<div class="note">${lang==="ru"?"Льгота не применена автоматически. Право на неё и необходимые документы подтверждает таможенный орган.":"Imtiyoz avtomatik qoʻllanmadi. Unga boʻlgan huquq va kerakli hujjatlarni bojxona organi tasdiqlaydi."}</div>`;
+ if(step===4)h+=`<div class="note">${t("editRates")}.</div>`;
+ $("stepCard").innerHTML=h;
+ $("stepCard").querySelectorAll("[data-k]").forEach(el=>el.addEventListener("input",()=>{d[el.dataset.k]=el.value;saveDraft();if(step===0)renderStep()}));
+ $("backBtn").classList.toggle("hidden",step===0);
+ $("nextBtn").textContent=step===steps.length-1?t("result"):t("next");
+}
+
+function nextStep(){
+ collect();saveDraft();
+ if(step===steps.length-1){renderResult();$("calc").classList.add("hidden");$("result").classList.remove("hidden");return}
+ step++;renderStep();
+}
+function prevStep(){if(step>0){step--;renderStep()}else goHome()}
+
+function collect(){steps.forEach(s=>s.fields.forEach(f=>{const el=document.querySelector(`[data-k="${f.k}"]`);if(el)d[f.k]=el.value}))}
+
+function num(k){const v=parseFloat(String(d[k]||"").replace(",","."));return isFinite(v)?v:0}
+function calc(){
+ const fx=num("fx"),price=num("price"),delivery=num("delivery"),insurance=num("insurance"),agent=num("agent");
+ const extra=d.includeExtra==="yes"?delivery+insurance+agent:0;
+ const foreign=price+extra;
+ const cv=foreign*fx;
+ const duty=cv*num("dutyRate")/100;
+ const excise=(cv+duty)*num("exciseRate")/100;
+ const vat=(cv+duty+excise)*num("vatRate")/100;
+ const recycle=num("recycleAmount"),fee=num("customsFee"),other=num("otherAmount");
+ const total=duty+excise+vat+recycle+fee+other;
+ return{cv,duty,excise,vat,recycle,fee,other,total,foreign}
+}
+
+function docsList(){
+ const ind=d.importer==="individual";
+ const arr=ind?[
+  lang==="ru"?"Паспорт или иной документ, удостоверяющий личность":"Pasport yoki shaxsni tasdiqlovchi boshqa hujjat",
+  lang==="ru"?"Договор купли-продажи, инвойс, счёт или иной документ о стоимости":"Sotuv shartnomasi, invoys, hisob-faktura yoki qiymatni tasdiqlovchi boshqa hujjat",
+  lang==="ru"?"Технический паспорт, сертификат или свидетельство о регистрации автомобиля":"Avtomobil texnik pasporti, sertifikati yoki roʻyxatga olish guvohnomasi",
+  lang==="ru"?"Транспортные и страховые документы, если применимо":"Transport va sugʻurta hujjatlari, agar qoʻllansa",
+  lang==="ru"?"Подтверждение оплаты":"Toʻlovni tasdiqlovchi hujjat",
+  lang==="ru"?"Документы о стране происхождения, если требуются":"Kelib chiqish davlati hujjatlari, agar talab qilinsa"
+ ]:[
+  lang==="ru"?"Свидетельство о регистрации / учредительные документы":"Roʻyxatga olish guvohnomasi / taʼsis hujjatlari",
+  lang==="ru"?"Внешнеторговый контракт":"Tashqi savdo shartnomasi",
+  lang==="ru"?"Инвойс":"Invoys",
+  lang==="ru"?"Транспортные документы":"Transport hujjatlari",
+  lang==="ru"?"Страховой документ, если есть":"Sugʻurta hujjati, agar boʻlsa",
+  lang==="ru"?"Сертификат происхождения, если требуется":"Kelib chiqish sertifikati, agar talab qilinsa",
+  lang==="ru"?"Декларация на товары":"Tovarlarga deklaratsiya"
+ ];
+ if(d.benefit&&d.benefit!=="none")arr.push(lang==="ru"?"Документы, подтверждающие право на льготу":"Imtiyoz huquqini tasdiqlovchi hujjatlar");
+ return arr
+}
+
+function renderResult(){
+ const c=calc();const g=guessHS();const hs=d.hsCode||g.code;
+ const risks=[
+  lang==="ru"?"Подтвердите точный код ТН ВЭД по описанию автомобиля и документам.":"Avtomobil tavsifi va hujjatlari asosida aniq TN VED kodini tasdiqlang.",
+  lang==="ru"?"Проверьте актуальные ставки пошлины, акциза, НДС, утильсбора и таможенного сбора.":"Bojxona bojı, aksiz, QQS, utilizatsiya toʻlovi va bojxona yigʻimi stavkalarini tekshiring.",
+  lang==="ru"?"Проверьте, включаются ли доставка, страховка и комиссия в таможенную стоимость.":"Yetkazib berish, sugʻurta va komissiya bojxona qiymatiga kiritilishini tekshiring.",
+  lang==="ru"?"Если есть льгота, заранее уточните условия и документы.":"Imtiyoz boʻlsa, shartlar va hujjatlarni oldindan aniqlang."
+ ];
+ const rows=[[t("customsValue"),c.cv],[t("duty"),c.duty],[t("excise"),c.excise],[t("vat"),c.vat],[t("recycle"),c.recycle],[t("fee"),c.fee],[t("other"),c.other]];
+ let h=`<div class="card"><h2>${t("result")}</h2><div class="hint">${t("noData")} — ${t("editRates")}.</div><div class="total">${fmt(c.total)} ${t("sum")}</div><div class="hint">${lang==="ru"?"Ориентировочно в исходной валюте":"Taxminan dastlabki valyutada"}: ${fmt(c.total/(num("fx")||1))} ${d.currency||""}</div><button class="btn secondary small" onclick="toggleDetails()">${showDetails?t("hide"):t("details")}</button><div id="det" class="${showDetails?"":"hidden"}"><table><tr><th>${lang==="ru"?"Платёж":"Toʻlov"}</th><th>${t("amount")}, ${t("sum")}</th></tr>${rows.map(r=>`<tr><td>${r[0]}</td><td>${fmt(r[1])}</td></tr>`).join("")}</table><div class="note">${lang==="ru"?"НДС рассчитывается от таможенной стоимости с учётом пошлины и акциза, если они применимы.":"QQS bojxona qiymati hamda, qoʻllansa, bojxona bojı va aksiz hisobga olinib hisoblanadi."}</div></div></div>`;
+ h+=`<div class="card"><h3>${t("hs")}</h3><div class="total" style="font-size:24px">${hs}</div><p>${g.why[lang]}</p><div class="note">${lang==="ru"?"Код ТН ВЭД требует подтверждения таможенным органом.":"TN VED kodi bojxona organi tomonidan tasdiqlanishi kerak."}</div></div>`;
+ h+=`<div class="card"><h3>${t("docsTitle")}</h3><ul>${docsList().map(x=>`<li>${x}</li>`).join("")}</ul><button class="btn secondary small" onclick="copyAll()">${t("copy")}</button></div>`;
+ h+=`<div class="card"><h3>${t("steps")}</h3><ol><li>${lang==="ru"?"Проверить код ТН ВЭД и характеристики автомобиля.":"TN VED kodi va avtomobil xususiyatlarini tekshirish."}</li><li>${lang==="ru"?"Подготовить документы.":"Hujjatlarni tayyorlash."}</li><li>${lang==="ru"?"Подать таможенную декларацию.":"Bojxona deklaratsiyasini topshirish."}</li><li>${lang==="ru"?"Оплатить начисленные платежи.":"Hisoblangan toʻlovlarni toʻlash."}</li><li>${lang==="ru"?"Получить выпуск автомобиля и документы.":"Avtomobilni chiqarib berish va hujjatlarni olish."}</li></ol></div>`;
+ h+=`<div class="card"><h3>${t("risk")}</h3><ul>${risks.map(x=>`<li>${x}</li>`).join("")}</ul></div>`;
+ h+=`<div class="card"><h3>${t("check")}</h3><ul><li>${lang==="ru"?"Точный код ТН ВЭД.":"Aniq TN VED kodi."}</li><li>${lang==="ru"?"Применимые ставки и льготы.":"Qoʻllanadigan stavkalar va imtiyozlar."}</li><li>${lang==="ru"?"Состав таможенной стоимости.":"Bojxona qiymati tarkibi."}</li><li>${lang==="ru"?"Необходимые документы и порядок подачи декларации.":"Kerakli hujjatlar va deklaratsiya topshirish tartibi."}</li></ul></div>`;
+ h+=`<div class="row"><button class="btn secondary" onclick="saveCalc()">${t("save")}</button><button class="btn secondary" onclick="copyAll()">${t("copy")}</button></div><button class="btn" onclick="goHome()">${t("restart")}</button>`;
+ $("result").innerHTML=h;
+}
+function toggleDetails(){showDetails=!showDetails;renderResult()}
+function copyAll(){const c=calc();const text=`${t("app")}\n${t("hs")}: ${d.hsCode||guessHS().code}\n${t("customsValue")}: ${fmt(c.cv)} ${t("sum")}\n${t("duty")}: ${fmt(c.duty)}\n${t("excise")}: ${fmt(c.excise)}\n${t("vat")}: ${fmt(c.vat)}\n${t("recycle")}: ${fmt(c.recycle)}\n${t("fee")}: ${fmt(c.fee)}\n${t("total")}: ${fmt(c.total)} ${t("sum")}\n\n${t("docsTitle")}:\n${docsList().map(x=>"• "+x).join("\n")}\n\n${lang==="ru"?"Предварительный расчёт. Окончательную сумму определяет таможенный орган.":"Dastlabki hisob-kitob. Yakuniy summani bojxona organi belgilaydi."}`;navigator.clipboard?.writeText(text);alert(lang==="ru"?"Расчёт скопирован":"Hisob-kitob nusxalandi")}
+function saveCalc(){const c=calc();const arr=JSON.parse(localStorage.getItem("uzAutoSaved")||"[]");arr.unshift({date:new Date().toLocaleString(),d:{...d},total:c.total});localStorage.setItem("uzAutoSaved",JSON.stringify(arr.slice(0,20)));alert(lang==="ru"?"Сохранено":"Saqlandi")}
+function renderDocs(){
+ const h=`<div class="card"><h2>${t("docsTitle")}</h2><ul><li>${lang==="ru"?"Паспорт / документ, удостоверяющий личность.":"Pasport / shaxsni tasdiqlovchi hujjat."}</li><li>${lang==="ru"?"Документы о покупке и стоимости автомобиля.":"Avtomobil sotib olish va qiymati hujjatlari."}</li><li>${lang==="ru"?"Технический паспорт, сертификат или свидетельство.":"Texnik pasport, sertifikat yoki guvohnoma."}</li><li>${lang==="ru"?"Транспортные, страховые и платёжные документы.":"Transport, sugʻurta va toʻlov hujjatlari."}</li><li>${lang==="ru"?"Документы о стране происхождения, если требуются.":"Kelib chiqish davlati hujjatlari, agar talab qilinsa."}</li><li>${lang==="ru"?"Документы для льготы, если она заявляется.":"Imtiyoz uchun hujjatlar, agar ariza qilinsa."}</li></ul><div class="note">${lang==="ru"?"Точный перечень зависит от статуса ввоза, кода ТН ВЭД, льгот и требований таможенного органа.":"Aniq roʻyxat keltirish statusi, TN VED kodi, imtiyozlar va bojxona organi talablariga bogʻliq."}</div><button class="btn" onclick="goHome()">${t("back")}</button></div>`;$("docsScreen").innerHTML=h}
+function renderSaved(){const arr=JSON.parse(localStorage.getItem("uzAutoSaved")||"[]");let h=`<div class="card"><h2>${t("saved")}</h2>`;if(!arr.length)h+=`<p>${t("empty")}</p>`;else h+=arr.map((x,i)=>`<div class="card" style="margin:8px 0"><b>${x.date}</b><br>${t("total")}: ${fmt(x.total)} ${t("sum")}<br><button class="btn small" onclick='loadSaved(${i})'>${t("open")}</button><button class="btn secondary small" onclick='delSaved(${i})'>${t("delete")}</button></div>`).join("");h+=`<button class="btn" onclick="goHome()">${t("back")}</button></div>`;$("savedScreen").innerHTML=h}
+function loadSaved(i){const arr=JSON.parse(localStorage.getItem("uzAutoSaved")||"[]");Object.assign(d,arr[i].d);saveDraft();startCalc();step=steps.length-1;renderStep()}
+function delSaved(i){const arr=JSON.parse(localStorage.getItem("uzAutoSaved")||"[]");arr.splice(i,1);localStorage.setItem("uzAutoSaved",JSON.stringify(arr));renderSaved()}
+</script>
+</body>
+</html>
